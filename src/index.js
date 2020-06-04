@@ -43,7 +43,7 @@ const volumeSeries = chart.addHistogramSeries({
   },
   overlay: true,
   scaleMargins: {
-    top: 0.8,
+    top: 0.9,
     bottom: 0
   }
 });
@@ -98,6 +98,8 @@ function nextBar() {
     Math.min(nextBar.bar.open, nextBar.bar.close) -
     Math.abs(change_amount) * Math.random();
   nextBar.bar.value = Math.random() * 100;
+  nextBar.bar.color =
+    nextBar.bar.open < nextBar.bar.close ? "#ff809f" : "#6bffc1";
 
   return nextBar.bar;
 }
