@@ -1,2 +1,0 @@
-# LightweightChartsDemo
-Created with CodeSandbox
