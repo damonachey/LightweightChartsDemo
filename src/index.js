@@ -23,6 +23,12 @@ const chart = createChart(document.body, {
   },
   timeScale: {
     borderColor: "#485158"
+  },
+  watermark: {
+    text: "XYZ",
+    fontSize: 256,
+    color: "rgba(256, 256, 256, 0.1)",
+    visible: true
   }
 });
 
