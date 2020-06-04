@@ -99,7 +99,7 @@ function nextBar() {
     Math.abs(change_amount) * Math.random();
   nextBar.bar.value = Math.random() * 100;
   nextBar.bar.color =
-    nextBar.bar.open < nextBar.bar.close ? "#ff809f" : "#6bffc1";
+    nextBar.bar.close < nextBar.bar.open ? "#ff809f" : "#6bffc1";
 
   return nextBar.bar;
 }
