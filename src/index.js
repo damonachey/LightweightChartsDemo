@@ -36,7 +36,7 @@ const candleSeries = chart.addCandlestickSeries({
 });
 
 const volumeSeries = chart.addHistogramSeries({
-  color: "#182233",
+  color: "#385263",
   lineWidth: 2,
   priceFormat: {
     type: "volume"
@@ -91,8 +91,12 @@ function nextBar() {
   let change_amount = old_price * change_percent;
   nextBar.bar.open = nextBar.bar.close;
   nextBar.bar.close = old_price + change_amount;
-  nextBar.bar.high = Math.max(nextBar.bar.open, nextBar.bar.close) + Math.abs(change_amount) * Math.random();
-  nextBar.bar.low = Math.min(nextBar.bar.open, nextBar.bar.close) - Math.abs(change_amount) * Math.random();
+  nextBar.bar.high =
+    Math.max(nextBar.bar.open, nextBar.bar.close) +
+    Math.abs(change_amount) * Math.random();
+  nextBar.bar.low =
+    Math.min(nextBar.bar.open, nextBar.bar.close) -
+    Math.abs(change_amount) * Math.random();
   nextBar.bar.value = Math.random() * 100;
 
   return nextBar.bar;
