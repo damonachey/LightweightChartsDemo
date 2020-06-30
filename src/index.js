@@ -66,7 +66,7 @@ setInterval(() => {
   const bar = nextBar();
   candleSeries.update(bar);
   volumeSeries.update(bar);
-}, 5000);
+}, 3000);
 
 window.addEventListener("resize", resize, false);
 
@@ -105,7 +105,9 @@ function nextBar() {
     Math.abs(change_amount) * Math.random();
   nextBar.bar.value = Math.random() * 100;
   nextBar.bar.color =
-    nextBar.bar.close < nextBar.bar.open ? "#ff809f" : "#6bffc1";
+    nextBar.bar.close < nextBar.bar.open
+      ? "rgba(255, 128, 159, 0.25)"
+      : "rgba(107, 255, 193, 0.25)";
 
   return nextBar.bar;
 }
