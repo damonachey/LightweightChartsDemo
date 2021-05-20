@@ -1,4 +1,3 @@
-import "./styles.css";
 import { createChart, CrosshairMode } from "lightweight-charts";
 
 const chart = createChart(document.body, {
