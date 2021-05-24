@@ -13,7 +13,7 @@ const chart = LightweightCharts.createChart(document.body, {
     }
   },
   crosshair: {
-    mode: CrosshairMode.Normal
+    mode: LightweightCharts.CrosshairMode.Normal
   },
   priceScale: {
     borderColor: "#485c7b"
