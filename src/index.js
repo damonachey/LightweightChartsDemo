@@ -1,7 +1,4 @@
-// import { createChart, CrosshairMode } from "lightweight-charts";
-import { createChart, CrosshairMode } from "https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js";
-
-const chart = createChart(document.body, {
+const chart = LightweightCharts.createChart(document.body, {
   width: window.innerWidth,
   height: window.innerHeight,
   layout: {
