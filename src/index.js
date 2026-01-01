@@ -66,6 +66,10 @@ LightweightCharts.createTextWatermark(firstPane, {
   }]
 });
 
+// Configure volume pane size
+const volumePane = chart.panes()[1];
+volumePane.setHeight(80); // Set height to 80 pixels
+
 for (let i = 0; i < 150; i++) {
   const bar = nextBar();
   candleSeries.update(bar);
