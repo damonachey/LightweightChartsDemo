@@ -51,13 +51,8 @@ const volumeSeries = chart.addSeries(LightweightCharts.HistogramSeries, {
   lineWidth: 2,
   priceFormat: {
     type: 'volume'
-  },
-  overlay: true,
-  scaleMargins: {
-    top: 0.9,
-    bottom: 0
   }
-});
+}, 1); // Add to pane 1 (second pane)
 
 // Add watermark using the new plugin system
 const firstPane = chart.panes()[0];
