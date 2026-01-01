@@ -2,6 +2,8 @@
 
 body {
   font-family: sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 html,
@@ -9,6 +11,8 @@ body {
   width: 100%;
   height: 100%;
   font-family: sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
 }
 
 .chart-container {

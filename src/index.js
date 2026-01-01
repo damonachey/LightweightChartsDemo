@@ -2,53 +2,73 @@ const chart = LightweightCharts.createChart(document.body, {
   width: window.innerWidth,
   height: window.innerHeight,
   layout: {
-    backgroundColor: "#253248"
+    background: {
+      type: 'solid',
+      color: '#0d0d0d'
+    },
+    textColor: '#ffffff'
   },
   grid: {
     vertLines: {
-      color: "#334158"
+      color: '#2a2a2a'
     },
     horzLines: {
-      color: "#334158"
+      color: '#2a2a2a'
     }
   },
   crosshair: {
-    mode: LightweightCharts.CrosshairMode.Normal
+    mode: LightweightCharts.CrosshairMode.Normal,
+    vertLine: {
+      color: '#4a4a4a',
+      width: 1
+    },
+    horzLine: {
+      color: '#4a4a4a',
+      width: 1
+    }
   },
   priceScale: {
-    borderColor: "#485c7b"
+    borderColor: '#2a2a2a',
+    textColor: '#ffffff'
   },
   timeScale: {
-    borderColor: "#485158"
-  },
-  watermark: {
-    text: "XYZ",
-    fontSize: 256,
-    color: "rgba(256, 256, 256, 0.1)",
-    visible: true
+    borderColor: '#2a2a2a',
+    textColor: '#ffffff'
   }
 });
 
-const candleSeries = chart.addCandlestickSeries({
-  upColor: "#4bffb5",
-  downColor: "#ff4976",
-  borderDownColor: "#ff4976",
-  borderUpColor: "#4bffb5",
-  wickDownColor: "#838ca1",
-  wickUpColor: "#838ca1"
+const candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+  upColor: '#26a69a',
+  downColor: '#ef5350',
+  borderDownColor: '#ef5350',
+  borderUpColor: '#26a69a',
+  wickDownColor: '#666666',
+  wickUpColor: '#666666'
 });
 
-const volumeSeries = chart.addHistogramSeries({
-  color: "#385263",
+const volumeSeries = chart.addSeries(LightweightCharts.HistogramSeries, {
+  color: '#7c4dff',
   lineWidth: 2,
   priceFormat: {
-    type: "volume"
+    type: 'volume'
   },
   overlay: true,
   scaleMargins: {
     top: 0.9,
     bottom: 0
   }
+});
+
+// Add watermark using the new plugin system
+const firstPane = chart.panes()[0];
+LightweightCharts.createTextWatermark(firstPane, {
+  horzAlign: 'center',
+  vertAlign: 'center',
+  lines: [{
+    text: "XYZ",
+    fontSize: 256,
+    color: "rgba(255, 255, 255, 0.05)",
+  }]
 });
 
 for (let i = 0; i < 150; i++) {
