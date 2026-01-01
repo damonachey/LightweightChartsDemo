@@ -70,11 +70,98 @@ LightweightCharts.createTextWatermark(firstPane, {
 const volumePane = chart.panes()[1];
 volumePane.setHeight(80); // Set height to 80 pixels
 
+// Bollinger Bands
+const bbLength = 20;
+const bbMultiplier = 2;
+const priceData = [];
+
+// Bollinger Bands series
+const bbUpperSeries = chart.addSeries(LightweightCharts.LineSeries, {
+  color: '#ff9800',
+  lineWidth: 1,
+  lineStyle: LightweightCharts.LineStyle.Dashed
+});
+
+const bbMiddleSeries = chart.addSeries(LightweightCharts.LineSeries, {
+  color: '#2196f3',
+  lineWidth: 1
+});
+
+const bbLowerSeries = chart.addSeries(LightweightCharts.LineSeries, {
+  color: '#ff9800',
+  lineWidth: 1,
+  lineStyle: LightweightCharts.LineStyle.Dashed
+});
+
+function calculateBollingerBands(closePrices, length, multiplier) {
+  const upper = [];
+  const middle = [];
+  const lower = [];
+  
+  for (let i = 0; i < closePrices.length; i++) {
+    if (i < length - 1) {
+      upper.push(null);
+      middle.push(null);
+      lower.push(null);
+      continue;
+    }
+    
+    // Calculate SMA
+    let sum = 0;
+    for (let j = 0; j < length; j++) {
+      sum += closePrices[i - j];
+    }
+    const sma = sum / length;
+    
+    // Calculate standard deviation
+    let squaredDifferencesSum = 0;
+    for (let j = 0; j < length; j++) {
+      squaredDifferencesSum += Math.pow(closePrices[i - j] - sma, 2);
+    }
+    const stdDev = Math.sqrt(squaredDifferencesSum / length);
+    
+    // Calculate bands
+    upper.push(sma + (multiplier * stdDev));
+    middle.push(sma);
+    lower.push(sma - (multiplier * stdDev));
+  }
+  
+  return { upper, middle, lower };
+}
+
+// Generate initial data
 for (let i = 0; i < 150; i++) {
   const bar = nextBar();
   candleSeries.update(bar);
   volumeSeries.update(bar);
+  priceData.push(bar.close);
 }
+
+// Calculate and set Bollinger Bands
+const bands = calculateBollingerBands(priceData, bbLength, bbMultiplier);
+const bbUpperData = [];
+const bbMiddleData = [];
+const bbLowerData = [];
+
+for (let i = 0; i < priceData.length; i++) {
+  const date = new Date(2020, 0, 1);
+  date.setDate(date.getDate() + i);
+  const time = {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate()
+  };
+  
+  if (bands.upper[i] !== null) {
+    bbUpperData.push({ time, value: bands.upper[i] });
+    bbMiddleData.push({ time, value: bands.middle[i] });
+    bbLowerData.push({ time, value: bands.lower[i] });
+  }
+}
+
+bbUpperSeries.setData(bbUpperData);
+bbMiddleSeries.setData(bbMiddleData);
+bbLowerSeries.setData(bbLowerData);
 
 resize();
 
@@ -82,6 +169,22 @@ setInterval(() => {
   const bar = nextBar();
   candleSeries.update(bar);
   volumeSeries.update(bar);
+  priceData.push(bar.close);
+  
+  // Keep only last 500 data points
+  if (priceData.length > 500) {
+    priceData.shift();
+  }
+  
+  // Update Bollinger Bands
+  const bands = calculateBollingerBands(priceData, bbLength, bbMultiplier);
+  const lastIndex = priceData.length - 1;
+  
+  if (lastIndex >= bbLength - 1 && bands.upper[lastIndex] !== null) {
+    bbUpperSeries.update({ time: bar.time, value: bands.upper[lastIndex] });
+    bbMiddleSeries.update({ time: bar.time, value: bands.middle[lastIndex] });
+    bbLowerSeries.update({ time: bar.time, value: bands.lower[lastIndex] });
+  }
 }, 3000);
 
 window.addEventListener("resize", resize, false);
